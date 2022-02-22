@@ -14,8 +14,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = __importDefault(require("../index"));
 const supertest_1 = __importDefault(require("supertest"));
+const imageUtils_1 = __importDefault(require("../utils/imageUtils"));
 const request = (0, supertest_1.default)(index_1.default);
 describe('Test Image processing', () => {
+    it('Make sure the sharpResize promise resolved', () => {
+        (0, imageUtils_1.default)('images/full/palmtunnel.jpg', 400, 300, 'palmtunnel_thumb400*300.jpg')
+            .then((done) => {
+            expectAsync(done).toBeResolved();
+        });
+    });
     it('Detect invalid width or height', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get('/api/imageResizer?filename=palmtunnel&width=-100&height=400');
         expect(response.text).toBe('Invalid dimensions');
