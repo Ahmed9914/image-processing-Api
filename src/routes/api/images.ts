@@ -26,7 +26,12 @@ imageResizer.get('/', (req: express.Request, res: express.Response) => {
       } else if (!existsSync(filenameWithExtension)) {
         res.send("File doesn't exist");
       } else {
-        sharpResize(filenameWithExtension as string, width as number, height as number, outFileName)
+        sharpResize(
+          filenameWithExtension as string,
+          width as number,
+          height as number,
+          outFileName
+        )
           .then(() => {
             res.sendFile(outFilePath);
           })
